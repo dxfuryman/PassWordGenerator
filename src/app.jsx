@@ -20,7 +20,7 @@ function App() {
     }, [length, numberAllowed, charAllowed, setPassword])
     return (
         <>
-        <div className='w-full max-w-md mx-auto shadow-md rounded-lg px-4 my-8 text-orange-500 bg-gray-800 border-2 border-white'>
+        <div className='w-full max-w-md mx-auto shadow-md rounded-lg px-4 my-8 text-orange-500 bg-gray-800 border-2 border-white align-middle'>
 
             <h1 className='text-4xl text-center text-white my-3S mb-2'>Password generator</h1>
             <div className='flex shadow rounded-lg overflow-hidden mb-4'>
@@ -31,6 +31,32 @@ function App() {
                 placeholder="Password"
                 readOnly={true}
                 />
+                <button className='outline-none bg-blue-700 text-white px-3 py-0.5 shrink-0
+                flex align-middle '>copy</button>
+            </div>
+            <div className='flex text-sm gap-x-2 pb-4'>
+                <div className='flex items-center gap-x-1'>
+                    <input
+                    type="range"
+                    min = {6}
+                    max = {100}
+                    value={length}
+                    className="cursor-pointer"
+                    onChange={(e) => {setLength(e.target.value)}}
+                    />
+                    <label>Length: {length}</label>
+                </div>
+               <div className="flex items-center gap-x-1">
+                   <input
+                       type="checkbox"
+                       defaultChecked={numberAllowed}
+                       id="numberInput"
+                       onChange={() => {
+                           setNumberAllowed((prev) => !prev);
+                       }}
+                   />
+                   <label htmlFor="numberInput">Numbers</label>
+               </div>
             </div>
         </div>
         </>
