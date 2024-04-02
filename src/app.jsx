@@ -1,14 +1,15 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
-import './App.css';
+import React, {useState, useCallback, useEffect, useRef} from 'react';
+import './App.css'; // Make sure to have an App.css file for styling
 
 function App() {
+    // State variables to store password settings
     const [length, setLength] = useState(8);
     const [numberAllowed, setNumberAllowed] = useState(false);
     const [charAllowed, setCharAllowed] = useState(false);
     const [Password, setPassword] = useState("");
-    const [copiedFeedback, setCopiedFeedback] = useState(false);
-    const passwordRef = useRef(null);
 
+    const passwordRef = useRef(null)
+    // Password generation logic (executed whenever dependencies change)
     const passwordGenerator = useCallback(() => {
         let pass = "";
         let str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -23,18 +24,14 @@ function App() {
     }, [length, numberAllowed, charAllowed, setPassword]);
 
     const copyPasswordToClipboard = useCallback(() => {
-        navigator.clipboard.writeText(Password).then(() => {
-            passwordRef.current.select();
-            setCopiedFeedback(true);
-            setTimeout(() => setCopiedFeedback(false), 1000);
-        }).catch((error) => {
-            alert('Could not copy password: ', error);
-        });
-    }, [Password]);
+            window.navigator.clipboard.writeText(password)
+        },
+        [password])
 
+    // Generate password on load and when settings change
     useEffect(() => {
         passwordGenerator();
-    }, [passwordGenerator]);
+    }, [length, numberAllowed, charAllowed, passwordGenerator]);
 
     return (
         <>
@@ -49,13 +46,13 @@ function App() {
                         readOnly={true}
                         ref={passwordRef}
                     />
-                    <button onClick={copyPasswordToClipboard} className='outline-none bg-blue-700 text-white px-3 py-0.5 shrink-0 flex align-middle'>
+                    <button
+                        onClick={copyPasswordToClipboard}
+                        className='outline-none bg-blue-700 text-white
+                        px-3 py-0.5 shrink-0 flex align-middle'>
                         Copy
                     </button>
                 </div>
-                {copiedFeedback && (
-                    <div className="copied-feedback">Copied to clipboard!</div>
-                )}
                 <div className='flex text-sm gap-x-2 pb-4'>
                     <div className='flex items-center gap-x-1'>
                         <input
